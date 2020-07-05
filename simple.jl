@@ -43,3 +43,17 @@ sol = solve(prob)
 
 plot(sol,vars=(1,2,3))
 savefig("sol2.png")
+
+
+Δx = 0.1
+x = Δx:Δx:1-Δx # Solve only for the interior: the endpoints are known to be zero!
+N = length(x)
+B = sin.(2π*x)
+A = zeros(N,N)
+for i in 1:N, j in 1:N
+  abs(i-j)<=1 && (A[i,j]+=1)
+  i==j && (A[i,j]-=3)
+end
+A = A/(Δx^2)
+
+U = A\B
